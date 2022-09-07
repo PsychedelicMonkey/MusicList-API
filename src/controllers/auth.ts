@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
 import { JWT_SECRET } from '../utils/secrets';
@@ -8,6 +9,11 @@ export const loginUser = async (
   res: Response,
   next: NextFunction
 ) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const { email, password } = req.body;
 
@@ -36,6 +42,11 @@ export const registerUser = async (
   res: Response,
   next: NextFunction
 ) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const { firstName, lastName, email, password } = req.body;
 
