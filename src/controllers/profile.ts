@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import User from '../models/User';
 import { User as IUser } from '../types/user';
 
@@ -27,6 +28,11 @@ export const updateProfile = async (
   res: Response,
   next: NextFunction
 ) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const { firstName, lastName, bio } = req.body;
     const { id } = req.user as IUser;
