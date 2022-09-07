@@ -1,14 +1,6 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
-
-interface User extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-
-  checkPassword(password: string): Promise<boolean>;
-}
+import { User } from '../types/user';
 
 const UserSchema = new Schema<User>(
   {
@@ -29,6 +21,12 @@ const UserSchema = new Schema<User>(
       type: String,
       required: true,
       select: false,
+    },
+    bio: {
+      type: String,
+    },
+    avatar: {
+      type: String,
     },
   },
   { timestamps: true }

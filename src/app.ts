@@ -7,6 +7,7 @@ import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 
 import authRouter from './routes/auth';
 import indexRouter from './routes';
+import profileRouter from './routes/profile';
 
 initializePassport();
 
@@ -25,5 +26,6 @@ app.use(
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/profile', profileRouter);
 
 export default app;
