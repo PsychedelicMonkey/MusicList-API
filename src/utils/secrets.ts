@@ -11,6 +11,7 @@ if (fs.existsSync('.env')) {
 
 export const COOKIE_SECRET: string = process.env.COOKIE_SECRET!;
 export const CORS_ORIGIN: string = process.env.CORS_ORIGIN!;
+export const JWT_SECRET: string = process.env.JWT_SECRET!;
 export const MONGO_URI: string = process.env.MONGO_URI!;
 
 // ===========================================================================
@@ -22,7 +23,12 @@ if (!COOKIE_SECRET) {
   process.exit(1);
 }
 
-if (!COOKIE_SECRET) {
+if (!MONGO_URI) {
   logger.error('MONGO_URI is not set');
+  process.exit(1);
+}
+
+if (!JWT_SECRET) {
+  logger.error('JWT_SECRET is not set');
   process.exit(1);
 }

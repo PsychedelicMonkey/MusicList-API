@@ -2,10 +2,13 @@ import express, { Application } from 'express';
 import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import initializePassport from './config/passport';
 import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 
 import authRouter from './routes/auth';
 import indexRouter from './routes';
+
+initializePassport();
 
 const app: Application = express();
 
