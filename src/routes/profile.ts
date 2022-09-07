@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { auth } from '../config/passport';
-import { getProfile, updateProfile } from '../controllers/profile';
+import {
+  getProfile,
+  updateProfile,
+  uploadAvatar,
+} from '../controllers/profile';
 
 const router: Router = Router();
 
@@ -17,5 +21,7 @@ router.put(
     .withMessage('your bio cannot exceed 150 characters'),
   updateProfile
 );
+
+router.post('/avatar', auth, uploadAvatar);
 
 export default router;

@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import morgan from 'morgan';
 import initializePassport from './config/passport';
 import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 
@@ -23,6 +24,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(morgan('dev'));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);

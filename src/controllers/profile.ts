@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import upload from '../config/multer';
 import User from '../models/User';
 import { User as IUser } from '../types/user';
 
@@ -47,4 +48,23 @@ export const updateProfile = async (
   } catch (err) {
     return next(err);
   }
+};
+
+export const uploadAvatar = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  upload(req, res, async (err) => {
+    try {
+      if (err) throw err;
+
+      const { id } = req.user as IUser;
+      await User.findByIdAndUpdate(id, { avatar: req.file?.filename });
+
+      return res.json({ msg: 'ok' });
+    } catch (err) {
+      return next(err);
+    }
+  });
 };
