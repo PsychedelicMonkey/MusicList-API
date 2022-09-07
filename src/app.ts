@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 
+import authRouter from './routes/auth';
 import indexRouter from './routes';
 
 const app: Application = express();
@@ -20,5 +21,6 @@ app.use(
 );
 
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 export default app;
