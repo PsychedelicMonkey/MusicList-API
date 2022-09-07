@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import sharp from 'sharp';
 import upload from '../config/multer';
 import User from '../models/User';
 import { User as IUser } from '../types/user';
@@ -60,7 +61,13 @@ export const uploadAvatar = async (
       if (err) throw err;
 
       const { id } = req.user as IUser;
-      await User.findByIdAndUpdate(id, { avatar: req.file?.filename });
+      const filename = `img-${Date.now()}.jpg`;
+
+      await sharp(req.file?.buffer)
+        .resize(200, 200)
+        .jpeg()
+        .toFile(`public/${filename}`);
+      await User.findByIdAndUpdate(id, { avatar: filename });
 
       return res.json({ msg: 'ok' });
     } catch (err) {

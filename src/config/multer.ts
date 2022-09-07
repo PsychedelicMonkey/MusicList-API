@@ -1,12 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 
-const storage = multer.diskStorage({
-  destination: './public',
-  filename(req, file, cb) {
-    cb(null, `img-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
