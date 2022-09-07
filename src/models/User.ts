@@ -28,6 +28,20 @@ const UserSchema = new Schema<User>(
     avatar: {
       type: String,
     },
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        many: true,
+      },
+    ],
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        many: true,
+      },
+    ],
   },
   { timestamps: true }
 );

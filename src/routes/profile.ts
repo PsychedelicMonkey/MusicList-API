@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { auth } from '../config/passport';
+import { followProfile, unfollowProfile } from '../controllers/follow';
 import {
   getProfile,
   updateProfile,
@@ -10,6 +11,10 @@ import {
 const router: Router = Router();
 
 router.get('/:id', getProfile);
+
+router.post('/follow', auth, followProfile);
+
+router.post('/unfollow', auth, unfollowProfile);
 
 router.put(
   '/',

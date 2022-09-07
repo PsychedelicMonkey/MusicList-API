@@ -8,5 +8,8 @@ export interface User extends Document {
   bio?: string;
   avatar?: string;
 
+  followers: Array<User>;
+  following: Array<User>;
+
   checkPassword(password: string): Promise<boolean>;
 }
