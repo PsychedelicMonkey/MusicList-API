@@ -11,8 +11,18 @@ if (fs.existsSync('.env')) {
 
 export const COOKIE_SECRET: string = process.env.COOKIE_SECRET!;
 export const CORS_ORIGIN: string = process.env.CORS_ORIGIN!;
+export const MONGO_URI: string = process.env.MONGO_URI!;
 
+// ===========================================================================
+// Required environment variables
+// The API will not run if any of the blow are not set in .env file
+// ===========================================================================
 if (!COOKIE_SECRET) {
   logger.error('COOKIE_SECRET is not set');
+  process.exit(1);
+}
+
+if (!COOKIE_SECRET) {
+  logger.error('MONGO_URI is not set');
   process.exit(1);
 }
