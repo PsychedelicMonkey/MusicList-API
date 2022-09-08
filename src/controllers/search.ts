@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import type { Artist as IArtist } from 'music';
 import discogs from '../config/discogs';
 import Album from '../models/Album';
 import Artist from '../models/Artist';
@@ -40,7 +41,23 @@ export const saveAlbum = async (
     }
 
     const master = await discogs.getMaster(id);
-    album = await Album.create({ ...master, discogsId: id });
+    const artists: Array<IArtist> = [];
+
+    // Map through all artists and add all artists models to the artists array
+    await Promise.all(
+      master.artists.map(async (a: { id: number }) => {
+        let artist = await Artist.findOne({ discogsId: a.id });
+
+        if (!artist) {
+          const masterArtist = await discogs.getArtist(a.id);
+          artist = await Artist.create({ ...masterArtist, discogsId: a.id });
+        }
+
+        artists.push(artist.id);
+      })
+    );
+
+    album = await Album.create({ ...master, artists, discogsId: id });
 
     return res.status(201).json(album);
   } catch (err) {

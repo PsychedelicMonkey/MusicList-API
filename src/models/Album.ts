@@ -1,16 +1,5 @@
 import { Schema, model } from 'mongoose';
-
-type Album = {
-  discogsId: number;
-  artists: Array<object>;
-  genres: Array<string>;
-  images: Array<object>;
-  styles: Array<string>;
-  title: string;
-  tracklist: Array<object>;
-  videos: Array<object>;
-  year: number;
-};
+import type { Album } from 'music';
 
 const AlbumSchema = new Schema<Album>(
   {

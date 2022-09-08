@@ -1,15 +1,5 @@
 import { Schema, model } from 'mongoose';
-
-type Artist = {
-  discogsId: number;
-  images: Array<object>;
-  members?: Array<object>;
-  name: string;
-  namevariations?: Array<string>;
-  profile: string;
-  realname?: string;
-  urls: Array<string>;
-};
+import type { Artist } from 'music';
 
 const ArtistSchema = new Schema<Artist>(
   {
