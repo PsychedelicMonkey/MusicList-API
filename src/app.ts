@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import initializePassport from './config/passport';
 import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 
+import albumRouter from './routes/album';
+import artistRouter from './routes/artist';
 import authRouter from './routes/auth';
 import indexRouter from './routes';
 import profileRouter from './routes/profile';
@@ -28,6 +30,8 @@ app.use(
 app.use(morgan('dev'));
 
 app.use('/', indexRouter);
+app.use('/album', albumRouter);
+app.use('/artist', artistRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/search', searchRouter);

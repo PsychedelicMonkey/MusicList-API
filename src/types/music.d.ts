@@ -1,6 +1,6 @@
 export type Album = {
   discogsId: number;
-  artists: Array<object>;
+  artists: Array<Artist>;
   genres: Array<string>;
   images: Array<object>;
   styles: Array<string>;

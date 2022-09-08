@@ -9,8 +9,13 @@ const AlbumSchema = new Schema<Album>(
       unique: true,
     },
     artists: {
-      type: [Schema.Types.Mixed],
-      required: true,
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Artist',
+          many: true,
+        },
+      ],
     },
     genres: [Schema.Types.Mixed],
     images: [Schema.Types.Mixed],
