@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { body } from 'express-validator';
 import {
   getAlbum,
   getArtist,
@@ -8,10 +9,18 @@ import {
 
 const router: Router = Router();
 
-router.post('/albums', searchAlbums);
+router.post(
+  '/albums',
+  body('query').notEmpty().withMessage('please enter an album name'),
+  searchAlbums
+);
 router.get('/albums/:id', getAlbum);
 
-router.post('/artists', searchArtists);
+router.post(
+  '/artists',
+  body('query').notEmpty().withMessage('please enter an artist name'),
+  searchArtists
+);
 router.get('/artists/:id', getArtist);
 
 export default router;
