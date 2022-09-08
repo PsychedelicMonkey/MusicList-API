@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import {
   getAlbum,
   getArtist,
+  saveAlbum,
   searchAlbums,
   searchArtists,
 } from '../controllers/search';
@@ -14,6 +15,13 @@ router.post(
   body('query').notEmpty().withMessage('please enter an album name'),
   searchAlbums
 );
+
+router.post(
+  '/albums/save',
+  body('id').notEmpty().withMessage('please provide an album id'),
+  saveAlbum
+);
+
 router.get('/albums/:id', getAlbum);
 
 router.post(
