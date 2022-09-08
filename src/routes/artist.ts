@@ -4,6 +4,7 @@ import { auth } from '../config/passport';
 import {
   getArtist,
   getArtistAlbums,
+  removeArtistFromFavorites,
   saveArtistToFavorites,
 } from '../controllers/artist';
 
@@ -16,6 +17,7 @@ router.post(
   saveArtistToFavorites
 );
 router.get('/:id', getArtist);
+router.delete('/:id', auth, removeArtistFromFavorites);
 router.get('/:id/albums', getArtistAlbums);
 
 export default router;

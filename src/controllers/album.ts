@@ -55,3 +55,33 @@ export const saveAlbumToFavorites = async (
     return next(err);
   }
 };
+
+export const removeAlbumFromFavorites = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user as IUser;
+    const { id } = req.params;
+
+    const album = await Album.findById(id);
+
+    if (!album) {
+      return res.status(404).json({ msg: 'not found' });
+    }
+
+    if (!user.albums.includes(album.id)) {
+      return res
+        .status(400)
+        .json({ msg: 'this album is not in your favorites' });
+    }
+
+    user.albums.splice(user.albums.indexOf(album.id), 1);
+    await user.save();
+
+    return res.json({ msg: 'ok' });
+  } catch (err) {
+    return next(err);
+  }
+};

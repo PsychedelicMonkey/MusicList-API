@@ -72,3 +72,33 @@ export const saveArtistToFavorites = async (
     return next(err);
   }
 };
+
+export const removeArtistFromFavorites = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user as IUser;
+    const { id } = req.params;
+
+    const artist = await Artist.findById(id);
+
+    if (!artist) {
+      return res.status(404).json({ msg: 'not found' });
+    }
+
+    if (!user.artists.includes(artist.id)) {
+      return res
+        .status(400)
+        .json({ msg: 'this artist is not in your favorites' });
+    }
+
+    user.artists.splice(user.artists.indexOf(artist.id), 1);
+    await user.save();
+
+    return res.json({ msg: 'ok' });
+  } catch (err) {
+    return next(err);
+  }
+};
