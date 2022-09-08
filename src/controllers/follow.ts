@@ -10,7 +10,7 @@ export const followProfile = async (
   try {
     const auth = req.user as IUser;
 
-    const user = await User.findById(req.body.id);
+    const user = await User.findById(req.body.id).select('followers');
 
     if (!user) {
       return res.status(404).json({ msg: 'not found' });
@@ -27,9 +27,11 @@ export const followProfile = async (
     }
 
     user.followers.push(auth._id);
+    user.followersCount = user.followers.length;
     await user.save();
 
     auth.following.push(user._id);
+    auth.followingCount = auth.following.length;
     await auth.save();
 
     return res.json({ msg: 'ok' });
@@ -46,7 +48,7 @@ export const unfollowProfile = async (
   try {
     const auth = req.user as IUser;
 
-    const user = await User.findById(req.body.id);
+    const user = await User.findById(req.body.id).select('followers');
 
     if (!user) {
       return res.status(404).json({ msg: 'not found' });
@@ -63,9 +65,11 @@ export const unfollowProfile = async (
     }
 
     user.followers.splice(user.followers.indexOf(auth._id), 1);
+    user.followersCount = user.followers.length;
     await user.save();
 
     auth.following.splice(auth.following.indexOf(user._id), 1);
+    auth.followingCount = auth.following.length;
     await auth.save();
 
     return res.json({ msg: 'ok' });

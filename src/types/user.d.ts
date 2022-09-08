@@ -7,6 +7,8 @@ export interface User extends Document {
   password: string;
   bio?: string;
   avatar?: string;
+  followersCount: number;
+  followingCount: number;
 
   followers: Array<User>;
   following: Array<User>;
