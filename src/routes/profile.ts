@@ -4,6 +4,8 @@ import { auth } from '../config/passport';
 import { followProfile, unfollowProfile } from '../controllers/follow';
 import {
   getProfile,
+  getProfileAlbums,
+  getProfileArtists,
   getProfileFollowers,
   getProfileFollowing,
   updateProfile,
@@ -15,6 +17,8 @@ const router: Router = Router();
 router.get('/:id', getProfile);
 router.get('/:id/followers', getProfileFollowers);
 router.get('/:id/following', getProfileFollowing);
+router.get('/:id/albums', getProfileAlbums);
+router.get('/:id/artists', getProfileArtists);
 
 router.post('/follow', auth, followProfile);
 router.post('/unfollow', auth, unfollowProfile);
