@@ -56,6 +56,26 @@ const UserSchema = new Schema<User>(
       ],
       select: false,
     },
+    albums: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Album',
+          many: true,
+        },
+      ],
+      select: false,
+    },
+    artists: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Artist',
+          many: true,
+        },
+      ],
+      select: false,
+    },
   },
   { timestamps: true }
 );

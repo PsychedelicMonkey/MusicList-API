@@ -18,6 +18,8 @@ const initializePassport = () => {
         const user = await User.findById(payload.id).select([
           'followers',
           'following',
+          'albums',
+          'artists',
         ]);
 
         if (!user) {

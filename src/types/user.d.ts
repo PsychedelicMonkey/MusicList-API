@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { Album, Artist } from 'music';
 
 export interface User extends Document {
   firstName: string;
@@ -12,6 +13,8 @@ export interface User extends Document {
 
   followers: Array<User>;
   following: Array<User>;
+  albums: Array<Album>;
+  artists: Array<Artist>;
 
   checkPassword(password: string): Promise<boolean>;
 }
