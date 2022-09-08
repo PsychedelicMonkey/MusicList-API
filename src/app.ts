@@ -9,6 +9,7 @@ import { COOKIE_SECRET, CORS_ORIGIN } from './utils/secrets';
 import authRouter from './routes/auth';
 import indexRouter from './routes';
 import profileRouter from './routes/profile';
+import searchRouter from './routes/search';
 
 initializePassport();
 
@@ -29,5 +30,6 @@ app.use(morgan('dev'));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
+app.use('/search', searchRouter);
 
 export default app;
