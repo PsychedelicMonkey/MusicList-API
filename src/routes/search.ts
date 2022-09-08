@@ -4,6 +4,7 @@ import {
   getAlbum,
   getArtist,
   saveAlbum,
+  saveArtist,
   searchAlbums,
   searchArtists,
 } from '../controllers/search';
@@ -29,6 +30,13 @@ router.post(
   body('query').notEmpty().withMessage('please enter an artist name'),
   searchArtists
 );
+
+router.post(
+  '/artists/save',
+  body('id').notEmpty().withMessage('please provide an artist id'),
+  saveArtist
+);
+
 router.get('/artists/:id', getArtist);
 
 export default router;

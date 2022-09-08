@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import discogs from '../config/discogs';
 import Album from '../models/Album';
+import Artist from '../models/Artist';
 
 export const getAlbum = async (
   req: Request,
@@ -32,14 +33,13 @@ export const saveAlbum = async (
   try {
     const { id } = req.body;
 
-    const master = await discogs.getMaster(id);
-
     let album = await Album.findOne({ discogsId: id }).exec();
 
     if (album) {
       return res.status(400).json({ msg: 'album already saved' });
     }
 
+    const master = await discogs.getMaster(id);
     album = await Album.create({ ...master, discogsId: id });
 
     return res.status(201).json(album);
@@ -84,6 +84,34 @@ export const getArtist = async (
     const artist = await discogs.getArtist(id);
 
     return res.json(artist);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const saveArtist = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const { id } = req.body;
+
+    let artist = await Artist.findOne({ discogsId: id }).exec();
+
+    if (artist) {
+      return res.status(400).json({ msg: 'artist already saved' });
+    }
+
+    const master = await discogs.getArtist(id);
+    artist = await Artist.create({ ...master, discogsId: id });
+
+    return res.status(201).json(artist);
   } catch (err) {
     return next(err);
   }
