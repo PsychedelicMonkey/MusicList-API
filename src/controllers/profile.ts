@@ -25,6 +25,46 @@ export const getProfile = async (
   }
 };
 
+export const getProfileFollowers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id).populate('followers');
+
+    if (!user) {
+      return res.status(404).json({ msg: 'not found' });
+    }
+
+    return res.json(user.followers);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const getProfileFollowing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id).populate('following');
+
+    if (!user) {
+      return res.status(404).json({ msg: 'not found' });
+    }
+
+    return res.json(user.following);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const updateProfile = async (
   req: Request,
   res: Response,

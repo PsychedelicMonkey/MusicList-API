@@ -4,6 +4,8 @@ import { auth } from '../config/passport';
 import { followProfile, unfollowProfile } from '../controllers/follow';
 import {
   getProfile,
+  getProfileFollowers,
+  getProfileFollowing,
   updateProfile,
   uploadAvatar,
 } from '../controllers/profile';
@@ -11,9 +13,10 @@ import {
 const router: Router = Router();
 
 router.get('/:id', getProfile);
+router.get('/:id/followers', getProfileFollowers);
+router.get('/:id/following', getProfileFollowing);
 
 router.post('/follow', auth, followProfile);
-
 router.post('/unfollow', auth, unfollowProfile);
 
 router.put(
