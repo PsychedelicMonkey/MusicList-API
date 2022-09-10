@@ -30,7 +30,7 @@ export const getArtistAlbums = async (
   try {
     const { id } = req.params;
 
-    const albums = await Album.find({ artists: id });
+    const albums = await Album.find({ artists: id }).sort('-year');
 
     return res.json(albums);
   } catch (err) {
