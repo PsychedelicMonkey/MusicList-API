@@ -10,6 +10,7 @@ import albumRouter from './routes/album';
 import artistRouter from './routes/artist';
 import authRouter from './routes/auth';
 import indexRouter from './routes';
+import listRouter from './routes/list';
 import profileRouter from './routes/profile';
 import searchRouter from './routes/search';
 
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/album', albumRouter);
 app.use('/artist', artistRouter);
 app.use('/auth', authRouter);
+app.use('/list', listRouter);
 app.use('/profile', profileRouter);
 app.use('/search', searchRouter);
 

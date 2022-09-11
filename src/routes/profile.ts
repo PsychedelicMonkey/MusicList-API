@@ -8,6 +8,7 @@ import {
   getProfileArtists,
   getProfileFollowers,
   getProfileFollowing,
+  getProfileList,
   updateProfile,
   uploadAvatar,
 } from '../controllers/profile';
@@ -19,6 +20,7 @@ router.get('/:id/followers', getProfileFollowers);
 router.get('/:id/following', getProfileFollowing);
 router.get('/:id/albums', getProfileAlbums);
 router.get('/:id/artists', getProfileArtists);
+router.get('/:id/list', getProfileList);
 
 router.post('/follow', auth, followProfile);
 router.post('/unfollow', auth, unfollowProfile);

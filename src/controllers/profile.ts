@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import sharp from 'sharp';
 import upload from '../config/multer';
+import List from '../models/List';
 import User from '../models/User';
 import { User as IUser } from '../types/user';
 
@@ -103,6 +104,25 @@ export const getProfileArtists = async (
     }
 
     return res.json(user.artists);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const getProfileList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const lists = await List.find({ user: id }).populate([
+      'user',
+      { path: 'albums', populate: { path: 'artists' } },
+    ]);
+
+    return res.json(lists);
   } catch (err) {
     return next(err);
   }
